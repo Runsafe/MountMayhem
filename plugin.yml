@@ -1,5 +1,5 @@
 name: MountMayhem
-main: no.runsafe.mountmayhem.MountMayhem
+main: no.runsafe.mountmayhem.Plugin
 version: 1.0
 author: Kruithne
 description: Mounting

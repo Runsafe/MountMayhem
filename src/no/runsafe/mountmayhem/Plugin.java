@@ -6,7 +6,7 @@ import no.runsafe.framework.command.RunsafeCommand;
 
 import java.util.ArrayList;
 
-public class MountMayhem extends RunsafePlugin
+public class Plugin extends RunsafePlugin
 {
     @Override
     protected void PluginSetup()
