@@ -1,6 +1,6 @@
 name: MountMayhem
 main: no.runsafe.mountmayhem.Plugin
-version: 1.0
+version: 1.0.@BUILD@
 author: Kruithne
 description: Mounting
 commands:
