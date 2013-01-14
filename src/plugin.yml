@@ -6,9 +6,5 @@ description: Mounting
 commands:
   mount:
     description: Mounting
-    usage: /mount <player> <player>
-    permission: mountmayhem.mount
   dismount:
     description: Makes the player dismount
-    usage: /dismount <player>
-    permission: mountmayhem.dismount

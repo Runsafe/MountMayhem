@@ -1,55 +1,30 @@
 package no.runsafe.mountmayhem;
 
-import no.runsafe.framework.command.ICommand;
-import no.runsafe.framework.command.RunsafeCommand;
-import no.runsafe.framework.command.RunsafeCommandHandler;
+import no.runsafe.framework.command.ExecutableCommand;
+import no.runsafe.framework.server.ICommandExecutor;
+import no.runsafe.framework.server.RunsafeServer;
 import no.runsafe.framework.server.player.RunsafePlayer;
-import org.bukkit.World;
-import org.bukkit.entity.Player;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.HashMap;
 
-public class MountCommand extends RunsafeCommand
+public class MountCommand extends ExecutableCommand
 {
-
 	public MountCommand()
 	{
-		super("mount");
+		super("mount", "", "mountmayhem.mount", "passenger", "mount");
 	}
 
 	@Override
-	public boolean Execute(RunsafePlayer player, String[] args)
+	public String OnExecute(ICommandExecutor executor, HashMap<String, String> parameters, String[] strings)
 	{
-		if (args.length == 2)
+		RunsafePlayer passenger = RunsafeServer.Instance.getPlayer(parameters.get("passenger"));
+		RunsafePlayer mount = RunsafeServer.Instance.getPlayer(parameters.get("mount"));
+
+		if (passenger != null && mount != null)
 		{
-			World world = player.getWorld().getRaw();
-
-			player.sendMessage("Checking for: " + args[0]);
-			Player firstPlayer = this.getPlayerByName(world, args[0]);
-
-			player.sendMessage("Checking for: " + args[1]);
-			Player secondPlayer = this.getPlayerByName(world, args[1]);
-
-			if (firstPlayer != null && secondPlayer != null)
-			{
-				player.sendMessage("Mounting " + firstPlayer.getName() + " on " + secondPlayer.getName());
-				secondPlayer.setPassenger(firstPlayer);
-				return true;
-			}
+			mount.setPassenger(passenger);
+			return String.format("Mounting %s on %s", passenger.getPrettyName(), mount.getPrettyName());
 		}
-		return false;
-	}
-
-	private Player getPlayerByName(World world, String name)
-	{
-		List<Player> players = world.getPlayers();
-
-		for (Player thePlayer : players)
-			if (thePlayer.getName().equalsIgnoreCase(name))
-				return thePlayer;
-
 		return null;
 	}
 }

@@ -1,47 +1,28 @@
 package no.runsafe.mountmayhem;
 
-import no.runsafe.framework.command.RunsafeCommand;
+import no.runsafe.framework.command.ExecutableCommand;
+import no.runsafe.framework.server.ICommandExecutor;
+import no.runsafe.framework.server.RunsafeServer;
 import no.runsafe.framework.server.player.RunsafePlayer;
-import org.bukkit.World;
-import org.bukkit.entity.Player;
 
-import java.util.Iterator;
-import java.util.List;
+import java.util.HashMap;
 
-public class DismountCommand extends RunsafeCommand
+public class DismountCommand extends ExecutableCommand
 {
 	public DismountCommand()
 	{
-		super("dismount");
+		super("dismount", "Dismounts the given player", "mountmayhem.dismount", "player");
 	}
 
 	@Override
-	public boolean Execute(RunsafePlayer player, String[] args)
+	public String OnExecute(ICommandExecutor executor, HashMap<String, String> parameters, String[] strings)
 	{
-		if (args.length == 1)
+		RunsafePlayer player = RunsafeServer.Instance.getPlayer(parameters.get("player"));
+		if (player != null)
 		{
-			World world = player.getWorld().getRaw();
-
-			Player firstPlayer = this.getPlayerByName(world, args[0]);
-
-			if (firstPlayer != null)
-			{
-				player.sendMessage("Dismounting " + firstPlayer.getName());
-				firstPlayer.leaveVehicle();
-				return true;
-			}
+			player.leaveVehicle();
+			return String.format("%s has left the vehicle.", player.getPrettyName());
 		}
-		return false;
-	}
-
-	private Player getPlayerByName(World world, String name)
-	{
-		List<Player> players = world.getPlayers();
-
-		for (Player thePlayer : players)
-			if (thePlayer.getName().equalsIgnoreCase(name))
-				return thePlayer;
-
 		return null;
 	}
 }
