@@ -15,7 +15,7 @@ public class MountCommand extends ExecutableCommand
 	}
 
 	@Override
-	public String OnExecute(ICommandExecutor executor, HashMap<String, String> parameters, String[] strings)
+	public String OnExecute(ICommandExecutor executor, HashMap<String, String> parameters)
 	{
 		RunsafePlayer passenger = RunsafeServer.Instance.getPlayer(parameters.get("passenger"));
 		RunsafePlayer mount = RunsafeServer.Instance.getPlayer(parameters.get("mount"));
